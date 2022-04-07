@@ -7,7 +7,10 @@ urlpatterns = [
     path('', customers_list),
 
     #susyscrmproject/urls.py dan kelgan 127.0.0.1:8000/customers/id so'rovlarga <pk> qo'shib, customers_details metodga yuboradi.
-    path('<int:pk>/', customer_detail)
+    path('<int:pk>/', customer_detail),
+
+    #127.0.0.1:8000/customers/create
+    path('create/', create_customer )
     
 
 ]
