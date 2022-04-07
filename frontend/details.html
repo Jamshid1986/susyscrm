@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customers details</title>
+    <title>Customer details</title>
     
 </head>
 <body>
-    <h1>SUSYS Customers details</h1>
 
-    <ul>
-        {% for customer in customers %}
-        <div class="client">{{customer.customer_id}}</div>
-        {% endfor %}
+    <h2>SUSYS Customer details</h2><br><br>
+    <h4>Ismi: {{ customer.first_name }} </h4>
+    <a href="/customers"> Mijozlar sahifasiga o'tish</a>
+    
+    
+        
 </body>
 </html>

@@ -12,9 +12,13 @@ def customers_list(request):
     }
     return render(request, 'customers_list.html', context)
 
-def customers_details(request, pk):
-    #print(pk)
+def customer_detail(request, pk):
+    print(pk)
     customer = get_list_or_404(models.Customer, id=pk)
+    
+    context = {
+        "customer":customer
+    }
     print(customer)
-    return render(request, 'details.html')
+    return render(request, 'details.html', context)
 
