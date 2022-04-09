@@ -10,7 +10,9 @@ urlpatterns = [
     path('<int:pk>/', customer_detail),
 
     #127.0.0.1:8000/customers/create
-    path('create/', create_customer )
+    path('create/', create_customer ),
+
+    path('<int:pk>/update/', update_customer)
     
 
 ]

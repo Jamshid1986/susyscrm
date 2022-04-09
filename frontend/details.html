@@ -5,13 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer details</title>
+    <a href="/customers"> Barcha mijozlar sahifasiga o'tish</a>
     
 </head>
 <body>
 
     <h2>SUSYS Customer details</h2><br><br>
-    <h4>Ismi: {{ customer.first_name }} </h4>
-    <a href="/customers"> Mijozlar sahifasiga o'tish</a>
+    <h4>Ismi: {{ customer.first_name }}</h4>
+    <h4>Familiyasi: {{ customer.last_name }}</h4>
+    <h4>Yoshi: {{ customer.age }}</h4>
+
+    <a href="/customers/{{ customer.pk }}/update/"> Mijoz ma'lumotlarini tahrirlash</a>
+    
     
     
         

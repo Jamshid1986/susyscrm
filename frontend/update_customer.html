@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yangi mijoz</title>
-    <a href="/customers"> Barcha mijozlar sahifasiga o'tish</a>
+    <title>Mijoz ma'lumotlarini o'zgartirish</title>
+    <a href="/customers"> Mijozlar sahifasiga o'tish</a>
 </head>
 <body>
     
-    <h3>Yangi mijozni qo'shish</h3>
+    <h3>{{customer.first_name}} {{customer.last_name}}ning ma'lumotlarini o'zgartirish: </h3>
     <form method="post">
         <!-- 
         Ismni kiriting:         <input type="text">
@@ -19,7 +19,7 @@
         <p>
         {% csrf_token %}
 
-        {{ forms.as_p }}
+        {{ form.as_p }}
 
         <button type="submit"> Saqlash </button>
     </form>
