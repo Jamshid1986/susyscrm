@@ -1,24 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer details</title>
-    <a href="/customers"> Barcha mijozlar sahifasiga o'tish</a>
-    
-</head>
-<body>
+{% extends 'base.html' %}
 
+{% block title %} {{customer.last_name}} {{ customer.first_name }}ning ma'lumotlari{% endblock title%}
+
+{% block content%}
+    
+    <a href="{% url 'customersapp:customers_list'%}"> Barcha mijozlar sahifasiga o'tish</a>
     <h2>SUSYS Customer details</h2><br><br>
     <h4>Ismi: {{ customer.first_name }}</h4>
     <h4>Familiyasi: {{ customer.last_name }}</h4>
     <h4>Yoshi: {{ customer.age }}</h4>
 
-    <a href="/customers/{{ customer.pk }}/update/"> Mijoz ma'lumotlarini tahrirlash</a>
-    
-    
-    
-        
-</body>
-</html>
+    <a href="{% url 'customersapp:update_customer' customer.pk %}"> Mijoz ma'lumotlarini tahrirlash</a>
+    <a href="{% url 'customersapp:delete_customer' customer.pk %}"> Mijozni o'chirish</a>
+
+{% endblock %}

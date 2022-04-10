@@ -15,13 +15,13 @@ def customers_list(request):
     return render(request, 'customers_list.html', context)
 
 def customer_detail(request, pk):
-    print(pk)
+    #print(pk)
     customer = get_object_or_404(models.Customer, id=pk)
     
     context = {
         "customer":customer
     }
-    print(customer)
+    #print(customer)
     return render(request, 'details.html', context)
 
 
@@ -77,3 +77,8 @@ def update_customer(request, pk):
         'form': form
                 }
     return render(request, "update_customer.html", context)
+
+def delete_customer(request, pk):
+    customer = models.Customer.objects.get(id=pk)
+    customer.delete()
+    return redirect('/customers')

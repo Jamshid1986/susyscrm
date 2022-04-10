@@ -1,15 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mijoz ma'lumotlarini o'zgartirish</title>
-    <a href="/customers"> Mijozlar sahifasiga o'tish</a>
-</head>
-<body>
-    
-    <h3>{{customer.first_name}} {{customer.last_name}}ning ma'lumotlarini o'zgartirish: </h3>
+{% extends 'base.html' %}
+
+{% block title %} Tahrirlash {% endblock title %}
+
+{% block content%}
+<a href="{% url 'customersapp:customers_list'%}"> Barcha mijozlar sahifasiga o'tish</a>
+<h3>{{customer.first_name}} {{customer.last_name}}ning ma'lumotlarini o'zgartirish: </h3>
     <form method="post">
         <!-- 
         Ismni kiriting:         <input type="text">
@@ -22,8 +17,6 @@
         {{ form.as_p }}
 
         <button type="submit"> Saqlash </button>
+        <a href="{% url 'customersapp:delete_customer' customer.pk %}"> Mijozni o'chirish</a>
     </form>
-
-    
-</body>
-</html>
+{% endblock %}

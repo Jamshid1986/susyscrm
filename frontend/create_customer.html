@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yangi mijoz</title>
+{% extends 'base.html' %}
+
+{% block title %} Yangi mijoz qo'shish {% endblock title %}
+
+{% block content %}
     <a href="/customers"> Barcha mijozlar sahifasiga o'tish</a>
-</head>
-<body>
-    
+
     <h3>Yangi mijozni qo'shish</h3>
     <form method="post">
         <!-- 
@@ -23,7 +19,4 @@
 
         <button type="submit"> Saqlash </button>
     </form>
-
-    
-</body>
-</html>
+{% endblock %}
