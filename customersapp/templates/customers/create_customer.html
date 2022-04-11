@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %} Yangi mijoz qo'shish {% endblock title %}
+
+{% block content %}
+
+    <a href="/customers"> Barcha mijozlar sahifasiga o'tish</a>
+    <br>
+
+    <h3>Yangi mijozni qo'shish</h3>
+    <form method="post">
+        <!-- 
+        Ismni kiriting:         <input type="text">
+        Familiyasini kiriting:  <input type="text">
+        Yoshini kiriting:       <input type="integer">
+        -->
+        <p>
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit"> Saqlash </button>
+    </form>
+{% endblock %}

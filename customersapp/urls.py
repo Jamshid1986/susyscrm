@@ -4,17 +4,17 @@ from .views import *
 app_name = "customersapp"
 urlpatterns = [
     #susyscrmprojectga yuboradigan url so'rovlarini shu yerda kutib olamiz: 127.0.0.1:8000/all/
-    path('', customers_list, name = 'customers_list'),
+    path('', CustomersListView.as_view(), name='customers_list'),
 
     #susyscrmproject/urls.py dan kelgan 127.0.0.1:8000/customers/id so'rovlarga <pk> qo'shib, customers_details metodga yuboradi.
-    path('<int:pk>/', customer_detail, name = 'customer_details'),
+    path('<int:pk>/', CustomerDetailView.as_view(), name = 'customer_details'),
 
     #127.0.0.1:8000/customers/create
-    path('create/', create_customer, name = 'create_customer' ),
+    path('create/', CustomerCreateView.as_view(), name = 'create_customer' ),
 
-    path('<int:pk>/update/', update_customer, name='update_customer'),
+    path('<int:pk>/update/', CustomerUpdateView.as_view(), name='update_customer'),
 
-    path('<int:pk>/delete/', delete_customer, name='delete_customer')
+    path('<int:pk>/delete/', CustomerDeleteView.as_view(), name='delete_customer')
     
 
 ]
