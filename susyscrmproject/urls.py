@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from django.contrib.auth.views import LoginView, LogoutView
 from customersapp.views import HomeView
 
 urlpatterns = [
@@ -25,5 +25,7 @@ urlpatterns = [
     #path ichidagi 'customers/' direktoriyasi customers_list.html ichidagi href="/customers/" dan kelgan so'rovlarni qabul qilib,
     #customersapp/urls.py ga uzatadi.
     path('customers/', include('customersapp.urls', namespace='customersapp')),
-    path('', HomeView.as_view(), name='home')
+    path('', HomeView.as_view(), name='home'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout')
 ]

@@ -123,3 +123,6 @@ STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
 AUTH_USER_MODEL = 'customersapp.User'
+
+LOGIN_REDIRECT_URL = '/customers'
+LOGOUT_REDIRECT_URL = '/customers'

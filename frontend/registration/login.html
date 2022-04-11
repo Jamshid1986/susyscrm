@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %} SUCRM Login {% endblock title %}
+
+{% block content %}
+    <br>
+    <form method="post">
+        <!-- 
+        Ismni kiriting:         <input type="text">
+        Familiyasini kiriting:  <input type="text">
+        Yoshini kiriting:       <input type="integer">
+        -->
+        <p>
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit"> Kirish </button>
+    </form>
+{% endblock %}
