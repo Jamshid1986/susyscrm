@@ -124,5 +124,6 @@ STATICFILES_DIRS = [
 ]
 AUTH_USER_MODEL = 'customersapp.User'
 
-LOGIN_REDIRECT_URL = '/customers'
-LOGOUT_REDIRECT_URL = '/customers'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = '/login'

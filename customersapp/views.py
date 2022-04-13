@@ -1,5 +1,6 @@
 from multiprocessing import context
 from re import template
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, reverse 
 from django.http import HttpResponse
 from django.views.generic import TemplateView, DeleteView, ListView, DetailView, CreateView, UpdateView
@@ -18,7 +19,7 @@ class SignUpView(CreateView):
 class HomeView(TemplateView):
     template_name = 'home.html'
 
-class CustomersListView(ListView):
+class CustomersListView(LoginRequiredMixin, ListView):
     template_name = 'customers_list.html'
     queryset = models.Customer.objects.all()
     context_object_name = 'customers'
@@ -32,7 +33,7 @@ class CustomersListView(ListView):
 #     }
 #     return render(request, 'customers_list.html', context)
 
-class CustomerDetailView(DetailView):
+class CustomerDetailView(LoginRequiredMixin, DetailView):
     template_name = 'details.html'
     queryset = models.Customer.objects.all()
     context_object_name = 'customer'
@@ -47,7 +48,7 @@ class CustomerDetailView(DetailView):
 #     #print(customer)
 #     return render(request, 'details.html', context)
 
-class CustomerCreateView(CreateView):
+class CustomerCreateView(LoginRequiredMixin, CreateView):
     template_name = 'customers/create_customer.html'
     form_class = CustomerModelForm
 
@@ -80,7 +81,7 @@ class CustomerCreateView(CreateView):
 #                 }
 #     return render(request, "create_customer.html", context)
 
-class CustomerUpdateView(UpdateView):
+class CustomerUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'customers/update_customer.html'
     form_class = CustomerModelForm
     queryset = models.Customer.objects.all()
@@ -117,7 +118,7 @@ class CustomerUpdateView(UpdateView):
 #                 }
 #     return render(request, "update_customer.html", context)
 
-class CustomerDeleteView(DeleteView):
+class CustomerDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'customers/delete.html'
     form_class = CustomerModelForm
     queryset = models.Customer.objects.all()

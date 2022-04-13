@@ -5,7 +5,13 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     pass
-   
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.user.username)
+
 class Customer(models.Model):
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
@@ -17,6 +23,7 @@ class Customer(models.Model):
 
 class Agent(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.user)
