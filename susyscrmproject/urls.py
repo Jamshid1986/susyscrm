@@ -25,6 +25,7 @@ urlpatterns = [
     #path ichidagi 'customers/' direktoriyasi customers_list.html ichidagi href="/customers/" dan kelgan so'rovlarni qabul qilib,
     #customersapp/urls.py ga uzatadi.
     path('customers/', include('customersapp.urls', namespace='customersapp')),
+    path('agents/', include('agentsapp.urls', namespace='agentsapp')),
     path('', HomeView.as_view(), name='home'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
