@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth.views import LoginView, LogoutView
-from customersapp.views import HomeView
+from customersapp.views import HomeView, SignUpView
 
 urlpatterns = [
     #customersapp dan keladigan url so'rovlarini shu yerda kutib olamiz: 127.0.0.1:8000/admin/
@@ -27,5 +27,6 @@ urlpatterns = [
     path('customers/', include('customersapp.urls', namespace='customersapp')),
     path('', HomeView.as_view(), name='home'),
     path('login/', LoginView.as_view(), name='login'),
-    path('logout/', LogoutView.as_view(), name='logout')
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('signup/', SignUpView.as_view(), name='signup')
 ]

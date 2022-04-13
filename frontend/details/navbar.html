@@ -12,13 +12,16 @@
       <a class="mr-5 hover:text-gray-900">Link</a>
     </nav>
     {% if not request.user.is_authenticated %}
-      <button class="inline-flex items-center bg-blue-300 border-0 py-1 px-3 focus:outline-none hover:bg-blue-200 rounded text-base mt-4 md:mt-0" style="margin-right: 20px">Ro'yxatdan o'tish
+      <button class="inline-flex items-center bg-blue-300 border-0 py-1 px-3 focus:outline-none hover:bg-blue-200 rounded text-base mt-4 md:mt-0" style="margin-right: 20px">
+        <a href="{% url 'signup' %}">
+          Ro'yxatdan o'tish
+        </a>
       </button>
     {% endif %}
     {% if request.user.is_authenticated %}
 
       {{ request.user.username }}
-      <button class="ml-3 inline-flex items-center bg-blue-300 border-0 py-1 px-3 focus:outline-none hover:bg-blue-200 rounded text-base mt-4 md:mt-0">
+        <button class="ml-3 inline-flex items-center bg-blue-300 border-0 py-1 px-3 focus:outline-none hover:bg-blue-200 rounded text-base mt-4 md:mt-0">
           <a href="{% url 'logout' %}">
             Chiqish
           </a>

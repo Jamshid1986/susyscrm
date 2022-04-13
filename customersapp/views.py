@@ -8,6 +8,13 @@ from .forms import *
 
 # Create your views here.
 
+class SignUpView(CreateView):
+    template_name = "registration/signup.html"
+    form_class = NewUserForm
+
+    def get_success_url(self):
+        return reverse('customersapp:customers_list')
+
 class HomeView(TemplateView):
     template_name = 'home.html'
 
