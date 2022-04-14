@@ -1,13 +1,13 @@
 from re import template
 from django.shortcuts import render
 from django.views import generic
-from django.contrib.auth.mixins import LoginRequiredMixin
+from .mixins import CompanyAndLoginRequiredMixin
 from customersapp.models import Agent
 from .forms import AgentModelForm
 from django.urls import reverse
 # Create your views here.
 
-class AgentListView(LoginRequiredMixin, generic.ListView):
+class AgentListView(CompanyAndLoginRequiredMixin, generic.ListView):
     template_name = 'agents/agents_list.html'
 
     def get_queryset(self):
@@ -16,7 +16,7 @@ class AgentListView(LoginRequiredMixin, generic.ListView):
         return Agent.objects.filter(company=company)
 
 
-class AgentCreateView(LoginRequiredMixin, generic.CreateView):
+class AgentCreateView(CompanyAndLoginRequiredMixin, generic.CreateView):
     template_name = 'agents/create_agent.html'
     form_class = AgentModelForm
 
@@ -31,14 +31,14 @@ class AgentCreateView(LoginRequiredMixin, generic.CreateView):
 
 
 #sucrm-52 nomli arxivdan chiqarilib olindi.
-class AgentDetailView(LoginRequiredMixin, generic.DetailView):
+class AgentDetailView(CompanyAndLoginRequiredMixin, generic.DetailView):
     template_name = "agents/agent_details.html"
     context_object_name = "agent"
 
     def get_queryset(self):
         return Agent.objects.filter(company=company)
 
-class AgentUpdateView(LoginRequiredMixin, generic.UpdateView):
+class AgentUpdateView(CompanyAndLoginRequiredMixin, generic.UpdateView):
     template_name = "agents/update_agent.html"
     form_class = AgentModelForm
 
@@ -48,7 +48,7 @@ class AgentUpdateView(LoginRequiredMixin, generic.UpdateView):
     def get_success_url(self):
         return reverse("agentsapp:agents")
 
-class AgentDeleteView(LoginRequiredMixin, generic.DeleteView):
+class AgentDeleteView(CompanyAndLoginRequiredMixin, generic.DeleteView):
     template_name = "agents/delete_agent.html"
     context_object_name = "agent"
 

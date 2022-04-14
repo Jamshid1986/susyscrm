@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from django.views.generic import TemplateView, DeleteView, ListView, DetailView, CreateView, UpdateView
 from . import models
 from .forms import *
+from agentsapp.mixins import CompanyAndLoginRequiredMixin
 
 # Create your views here.
 
@@ -33,7 +34,7 @@ class CustomersListView(LoginRequiredMixin, ListView):
 #     }
 #     return render(request, 'customers_list.html', context)
 
-class CustomerDetailView(LoginRequiredMixin, DetailView):
+class CustomerDetailView(CompanyAndLoginRequiredMixin, DetailView):
     template_name = 'details.html'
     queryset = models.Customer.objects.all()
     context_object_name = 'customer'
@@ -48,7 +49,7 @@ class CustomerDetailView(LoginRequiredMixin, DetailView):
 #     #print(customer)
 #     return render(request, 'details.html', context)
 
-class CustomerCreateView(LoginRequiredMixin, CreateView):
+class CustomerCreateView(CompanyAndLoginRequiredMixin, CreateView):
     template_name = 'customers/create_customer.html'
     form_class = CustomerModelForm
 
@@ -81,7 +82,7 @@ class CustomerCreateView(LoginRequiredMixin, CreateView):
 #                 }
 #     return render(request, "create_customer.html", context)
 
-class CustomerUpdateView(LoginRequiredMixin, UpdateView):
+class CustomerUpdateView(CompanyAndLoginRequiredMixin, UpdateView):
     template_name = 'customers/update_customer.html'
     form_class = CustomerModelForm
     queryset = models.Customer.objects.all()
@@ -118,7 +119,7 @@ class CustomerUpdateView(LoginRequiredMixin, UpdateView):
 #                 }
 #     return render(request, "update_customer.html", context)
 
-class CustomerDeleteView(LoginRequiredMixin, DeleteView):
+class CustomerDeleteView(CompanyAndLoginRequiredMixin, DeleteView):
     template_name = 'customers/delete.html'
     form_class = CustomerModelForm
     queryset = models.Customer.objects.all()
