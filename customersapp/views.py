@@ -22,8 +22,17 @@ class HomeView(TemplateView):
 
 class CustomersListView(LoginRequiredMixin, ListView):
     template_name = 'customers_list.html'
-    queryset = models.Customer.objects.all()
+    #queryset = models.Customer.objects.all()
     context_object_name = 'customers'
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_company:
+            queryset = Customer.objects.filter(company = user.userprofile)
+        else:
+            queryset = Customer.objects.filter(company = user.agent.company)
+            queryset = queryset.filter(agent_user = self.request.user)
+        return queryset
 
 
 # def customers_list(request):
