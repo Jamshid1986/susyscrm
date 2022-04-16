@@ -1,3 +1,4 @@
+from email import message
 from re import template
 from django.shortcuts import render
 from django.views import generic
@@ -5,6 +6,8 @@ from .mixins import CompanyAndLoginRequiredMixin
 from customersapp.models import Agent
 from .forms import AgentModelForm
 from django.urls import reverse
+import random
+from django.core.mail import send_mail
 # Create your views here.
 
 class AgentListView(CompanyAndLoginRequiredMixin, generic.ListView):
@@ -24,9 +27,22 @@ class AgentCreateView(CompanyAndLoginRequiredMixin, generic.CreateView):
         return reverse('agentsapp:agents')
 
     def form_valid(self, form):
-        agent = form.save(commit=False)
-        agent.profile = self.request.user.userprofile
-        agent.save()
+        user = form.save(commit=False)
+        user.is_company = False
+        user.is_agent = True
+        user.set_password(f"{random.randint(0,1000)}")
+        #agent.profile = self.request.user.userprofile
+        user.save()
+        Agent.objects.create(
+            user = user,
+            company = self.request.user.userprofile
+        )
+        send_mail(
+            subject = "Bu Agent yaratilgan",
+            message = "Yangi Agent yaratilgan",
+            from_email = "jimamaliyev@gmail.com",
+            recipient_list=[user.email],
+        )
         return super(AgentCreateView, self).form_valid(form)
 
 
