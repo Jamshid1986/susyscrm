@@ -3,7 +3,7 @@ from re import template
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, reverse 
 from django.http import HttpResponse
-from django.views.generic import TemplateView, DeleteView, ListView, DetailView, CreateView, UpdateView
+from django.views.generic import *
 from . import models
 from .forms import *
 from agentsapp.mixins import CompanyAndLoginRequiredMixin
@@ -33,6 +33,19 @@ class CustomersListView(LoginRequiredMixin, ListView):
             queryset = Customer.objects.filter(company = user.agent.company)
             queryset = queryset.filter(agent_user = self.request.user)
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(CustomersListView, self).get_context_data(**kwargs)
+        user = self.request.user
+        if user.is_company:
+            queryset = Customer.objects.filter(
+                company = user.userprofile,
+                agent__isnull = True
+            )
+            context.update({
+                "unassigned_customers":queryset
+            })
+        return context
 
 
 # def customers_list(request):
@@ -140,3 +153,25 @@ class CustomerDeleteView(CompanyAndLoginRequiredMixin, DeleteView):
 #     customer = models.Customer.objects.get(id=pk)
 #     customer.delete()
 #     return redirect('/customers')
+
+class AgentAssignView(CompanyAndLoginRequiredMixin, FormView):
+    template_name = 'customersapp/determine_agent.html'
+    form_class = AssignAgentForm
+
+    def get_form_kwargs(self, **kwargs):
+        kwargs = super(AgentAssignView, self).get_form_kwargs(**kwargs)
+        kwargs.update({
+            'request':self.request
+        })
+
+        return kwargs
+
+    def get_success_url(self):
+        return reverse('customersapp:customers_list')
+
+    def form_valid(self, form):
+        agent = form.cleaned_data['agent']
+        customer = Customer.objects.get(id = self.kwargs['pk'])
+        customer.agent = agent
+        customer.save()
+        return super(AgentAssignView, self).form_valid(form)

@@ -19,7 +19,8 @@ from django.contrib.auth.views import (
     LoginView, 
     LogoutView, 
     PasswordResetView, 
-    PasswordResetDoneView
+    PasswordResetDoneView,
+    PasswordResetConfirmView
 )
 from customersapp.views import HomeView, SignUpView
 
@@ -35,6 +36,7 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('signup/', SignUpView.as_view(), name='signup'),
-    path('password_reset_view/', PasswordResetView.as_view(), name='reset_password'),
-    path('password_reset_done_view/', PasswordResetDoneView.as_view(), name='password_reset_done'),
+    path('password_reset/', PasswordResetView.as_view(), name='reset_password'),
+    path('password_reset_done/', PasswordResetDoneView.as_view(), name='password_reset_done'),
+    path('password_reset_confirm/<uidb64>/<token>', PasswordResetConfirmView.as_view(), name='password_reset_confirm')
 ]
