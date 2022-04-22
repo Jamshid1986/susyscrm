@@ -1,5 +1,6 @@
 from multiprocessing import context
 from re import template
+from unicodedata import category
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, reverse 
 from django.http import HttpResponse
@@ -101,6 +102,22 @@ class CategoryListView(LoginRequiredMixin, ListView):
     template_name = "customers/category.html"
     context_object_name = 'category'
     #queryset = models.Category.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super(CategoryListView, self).get_context_data(**kwargs)
+        user = self.request.user
+        if user.is_company:
+            queryset = Customer.objects.filter(
+                company = user.userprofile,
+            )
+        else:
+            queryset = models.Category.objects.filter(
+                company = user.agent.company
+            )
+        context.update({
+                "unassigned_category_quantity":queryset.filter(category__isnull=True).count()
+            })
+        return context
 
     def get_queryset(self):
         user = self.request.user
