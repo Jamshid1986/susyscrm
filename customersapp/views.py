@@ -1,11 +1,8 @@
-from multiprocessing import context
-from re import template
-from unicodedata import category
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, reverse 
 from django.http import HttpResponse
 from django.views.generic import *
-from . import models
+from .models import *
 from .forms import *
 from agentsapp.mixins import CompanyAndLoginRequiredMixin
 
@@ -28,7 +25,7 @@ class CustomersListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         user = self.request.user
         if user.is_company:
-            queryset = Customer.objects.filter(company = user.userprofile)
+            queryset = Customer.objects.all()
         else:
             queryset = Customer.objects.filter(company = user.agent.company)
             queryset = queryset.filter(agent_user = self.request.user)
@@ -48,8 +45,8 @@ class CustomersListView(LoginRequiredMixin, ListView):
         return context
 
 class CustomerDetailView(CompanyAndLoginRequiredMixin, DetailView):
-    template_name = 'details.html'
-    queryset = models.Customer.objects.all()
+    template_name = 'customers/details.html'
+    queryset = Customer.objects.all()
     context_object_name = 'customer'
 
 class CustomerCreateView(CompanyAndLoginRequiredMixin, CreateView):
@@ -62,7 +59,7 @@ class CustomerCreateView(CompanyAndLoginRequiredMixin, CreateView):
 class CustomerUpdateView(CompanyAndLoginRequiredMixin, UpdateView):
     template_name = 'customers/update_customer.html'
     form_class = CustomerModelForm
-    queryset = models.Customer.objects.all()
+    queryset = Customer.objects.all()
     context_object_name = 'customer'
 
     def get_success_url(self):
@@ -71,7 +68,7 @@ class CustomerUpdateView(CompanyAndLoginRequiredMixin, UpdateView):
 class CustomerDeleteView(CompanyAndLoginRequiredMixin, DeleteView):
     template_name = 'customers/delete.html'
     form_class = CustomerModelForm
-    queryset = models.Customer.objects.all()
+    queryset = Customer.objects.all()
 
     def get_success_url(self):
         return reverse('customersapp:customers_list')
@@ -97,10 +94,9 @@ class AgentAssignView(CompanyAndLoginRequiredMixin, FormView):
         customer.save()
         return super(AgentAssignView, self).form_valid(form)
 
-
 class CategoryListView(LoginRequiredMixin, ListView):
     template_name = "customers/category.html"
-    context_object_name = 'category'
+    context_object_name = 'categories'
     #queryset = models.Category.objects.all()
 
     def get_context_data(self, **kwargs):
@@ -111,7 +107,7 @@ class CategoryListView(LoginRequiredMixin, ListView):
                 company = user.userprofile,
             )
         else:
-            queryset = models.Category.objects.filter(
+            queryset = Category.objects.filter(
                 company = user.agent.company
             )
         context.update({
@@ -122,11 +118,27 @@ class CategoryListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         user = self.request.user
         if user.is_company:
-            queryset = models.Category.objects.filter(
+            queryset = Category.objects.filter(
                 company = user.userprofile
                 )
         else:
-            queryset = models.Category.objects.filter(
+            queryset = Category.objects.filter(
+                company = user.agent.company
+                )
+        return queryset
+
+class CategoryDetailView(LoginRequiredMixin, DetailView):
+    template_name = 'customers/category_details.html'
+    context_object_name = 'category'
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_company:
+            queryset = Category.objects.filter(
+                company = user.userprofile
+                )
+        else:
+            queryset = Category.objects.filter(
                 company = user.agent.company
                 )
         return queryset

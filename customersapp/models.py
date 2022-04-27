@@ -22,7 +22,7 @@ class Customer(models.Model):
     age = models.IntegerField(default=1)
     company = models.ForeignKey(UserProfile, null=True, on_delete=models.CASCADE)
     agent = models.ForeignKey("Agent", null=True, blank=True, on_delete=models.SET_NULL)
-    category = models.ForeignKey("Category", null=True, blank=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey("Category", related_name='customer_related_name', null=True, blank=True, on_delete=models.SET_NULL)
 
 
     def __str__(self):
