@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %} Mijoz toifasini tahrirlash {% endblock title %}
+
+{% block content %}
+
+    <h3> Mijoz Fani </h3>
+    <br>
+    
+    <form method="post">
+        <!-- 
+        Ismni kiriting:         <input type="text">
+        Familiyasini kiriting:  <input type="text">
+        Yoshini kiriting:       <input type="integer">
+        -->
+        <p>
+        {% csrf_token %}
+        <br>
+
+        {{ form.as_p }}
+
+        <button type="submit"> Saqlash </button>
+    </form>
+{% endblock %}

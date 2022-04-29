@@ -36,3 +36,10 @@ class AssignAgentForm(forms.Form):
         agents = Agent.objects.filter(company=request.user.userprofile)
         super(AssignAgentForm, self).__init__(*args, **kwargs)
         self.fields['agent'].queryset=agents
+
+class CustomerCategoryUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Customer
+        fields = (
+            'category',
+        )

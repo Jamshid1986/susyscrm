@@ -56,6 +56,17 @@ class CustomerCreateView(CompanyAndLoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('customersapp:customers_list')
 
+    def form_valid(self, form):
+        customer = form.save(commit=False)
+        customer.company = self.request.user.userprofile
+        customer.save()
+        send_mail(
+            subject = 'Bu mijoz yaratilgan',
+            message = "Yangi mijoz qo'shing",
+            from_email = "test@test.com",
+            recipient_list = ["test2@test.com"],
+        )
+
 class CustomerUpdateView(CompanyAndLoginRequiredMixin, UpdateView):
     template_name = 'customers/update_customer.html'
     form_class = CustomerModelForm
@@ -142,3 +153,21 @@ class CategoryDetailView(LoginRequiredMixin, DetailView):
                 company = user.agent.company
                 )
         return queryset
+
+class CustomerCategoryUpdateView(LoginRequiredMixin, UpdateView):
+    template_name = 'customers/category_update_detail.html'
+    form_class = CustomerCategoryUpdateForm
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_company:
+            queryset = Customer.objects.filter(
+                company = user.userprofile
+            )
+        else:
+            queryset = Customer.objects.filter(
+                company = user.agent.company
+            )
+        return queryset
+
+    def get_success_url(self):
+        return reverse('customersapp:customers_list')
