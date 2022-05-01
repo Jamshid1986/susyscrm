@@ -11,16 +11,17 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-# import environ
+import environ
+from dotenv import load_dotenv
 import os
 
-# env = environ.Env(
-#     DEBUG = (bool, False)
-# )
-# environ.Env.read_env()
+env = environ.Env(
+     DEBUG = (bool, False)
+ )
+environ.Env.read_env()
 
-# DEBUG = env('DEBUG')
-# SECRET_KEY = env('SECRET_KEY')
+DEBUG = env('DEBUG')
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -35,7 +36,7 @@ SECRET_KEY = '89*ua&5ei4#p5x6$!*x=@pv5(tp0m6scu023k1@6w^-2*sg!=4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -55,6 +56,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -135,7 +137,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
-STATIC_ROOT = 'static_root'
+STATIC_ROOT = 'staticfiles'
 AUTH_USER_MODEL = 'customersapp.User'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 LOGIN_REDIRECT_URL = '/'
